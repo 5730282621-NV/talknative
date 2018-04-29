@@ -6,30 +6,21 @@ import {
   Route
 } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage.js';
+import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
 
 class App extends Component {
-<<<<<<< HEAD
-  componentDidMount(){
-    const url_album = '/chat'
-    fetch(url_album, {
-      method: 'POST',
-    })
-    .then(res => res.json())
-    .then(results => {
-      console.log(results)
-      }
-    )
-=======
   componentDidMount() {
     
->>>>>>> 4a766d84014b96de469e44c4723b223457dcf1f3
   }
 
   render() {
     return (
       <div className="App">
         <Router>
-          <Route exact path="/login" component={LoginPage} />
+          <div>
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/selectRoom" component={SelectRoomPage} />
+          </div>
         </Router>
       </div>
     );
