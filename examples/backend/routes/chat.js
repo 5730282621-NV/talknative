@@ -19,8 +19,7 @@ router.post('/get_msg_id', function (req, res) {
 	    if (err) {
 	        console.error("Unable to get item. Error JSON:", JSON.stringify(err, null, 2));
 			return res.json({
-				result: false,
-		    	msg_id: 0
+				result: false
 		    })
 	    } else {
 	        console.log("Get item succeeded:", JSON.stringify(data, null, 2));
@@ -65,4 +64,61 @@ router.post('/send_msg', function (req, res) {
 	});
 
  });
+
+router.post('/get_new_msg', function (req,res) {
+	var chat_room_id = req.body.chat_room_id;
+  	var msg_id = req.body.msg_id;
+	var params = {
+		TableName : "chat_message",
+	    KeyConditionExpression: "chat_room_id = :chat_room_id and msg_id > :msg_id",
+	    ExpressionAttributeValues: {
+	        ":chat_room_id":chat_room_id,
+	        ":msg_id": msg_id
+	    }
+	};
+
+	docClient.query(params, function(err, data) {
+	    if (err) {
+	        console.log("Unable to query. Error:", JSON.stringify(err, null, 2));
+	        return res.json({
+				result: false
+		    })
+	    } else {
+	        console.log("Query succeeded.");
+	        return res.json({
+				result: true,
+				msg_list: data['Items']
+		    })
+	    }
+	});
+
+});
+
+router.post('/leave_room', function (req,res) {
+	var chat_room_id = req.body.chat_room_id;
+  	var username = req.body.username;
+	var params = {
+		TableName : "chat_session",
+	    Key: {
+	    	"chat_room_id": chat_room_id,
+	    	"username": username
+	    }
+
+	};
+
+	docClient.delete(params, function(err, data) {
+	    if (err) {
+	        console.log("Unable to delete. Error:", JSON.stringify(err, null, 2));
+	        return res.json({
+				result: false
+		    })
+	    } else {
+	        console.log("Deleted item succeeded.");
+	        return res.json({
+				result: true
+		    })
+	    }
+	});
+
+});
 module.exports = router;
