@@ -4,9 +4,9 @@ import './App.css';
 
 class App extends Component {
   componentDidMount(){
-    const url_album = '/register'
+    const url_album = '/chat'
     fetch(url_album, {
-      method: 'GET',
+      method: 'POST',
     })
     .then(res => res.json())
     .then(results => {

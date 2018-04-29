@@ -28,7 +28,7 @@ app.use('/users', usersRouter);
 // app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 // app.use('/selectroom', selectRoomRouter);
-// app.use('/chat', chatRouter);
+app.use('/chat', chatRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,5 +45,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// DynamoDB connection setup
+var AWS = require("aws-sdk");
+
+AWS.config.update({
+  region: "ap-southeast-1",
+  endpoint: "dynamodb.ap-southeast-1.amazonaws.com"
+});
+
+global.docClient = new AWS.DynamoDB.DocumentClient();
 
 module.exports = app;
