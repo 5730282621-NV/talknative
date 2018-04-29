@@ -3,6 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  componentDidMount(){
+    const url_album = '/register'
+    fetch(url_album, {
+      method: 'GET',
+    })
+    .then(res => res.json())
+    .then(results => {
+      console.log(results)
+      }
+    )
+  }
+
+
   render() {
     return (
       <div className="App">
