@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
+import LoginPage from './LoginPage/LoginPage.js';
 
 class App extends Component {
+<<<<<<< HEAD
   componentDidMount(){
     const url_album = '/chat'
     fetch(url_album, {
@@ -13,19 +19,18 @@ class App extends Component {
       console.log(results)
       }
     )
+=======
+  componentDidMount() {
+    
+>>>>>>> 4a766d84014b96de469e44c4723b223457dcf1f3
   }
-
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Router>
+          <Route exact path="/login" component={LoginPage} />
+        </Router>
       </div>
     );
   }
