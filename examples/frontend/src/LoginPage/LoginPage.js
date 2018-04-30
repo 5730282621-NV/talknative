@@ -33,10 +33,15 @@ class LoginPage extends Component {
                 "password": this.state.password
             })
         })
-            .then(function (response) {
-                return response.text()
-            }).then(function (body) {
-
+            .then(response => {
+                return response.json();
+            }).then(body => {
+                console.log(body);
+                if (body.isOk && body.username == this.state.username) {
+                    window.location = "/";
+                } else {
+                    alert('Invalid username or password!');
+                }
             });
         event.preventDefault();
     }
@@ -44,15 +49,21 @@ class LoginPage extends Component {
     render() {
         return (
             <div className="LoginPage">
-                <div className="LoginImage"></div>
-                <div className="LoginTitle">TALKNATIVE</div>
+                <div className="KeeImage"></div>
+                <div className="KeeTitle">TALKNATIVE</div>
                 <div className="LoginPanel">
-                    <form>
-                        <input type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />
-                        <input type="text" ref="password" placeholder="PASSWORD" onChange={this.passwordChanged.bind(this)} />
-                        <input type="submit" value="SUBMIT" onClick={this.submit.bind(this)} />
-                    </form>
-                    <a href="/">Sign up</a>
+                    <div className="sign" >Sign in</div>
+                    <br/>
+                    <br/>
+                    <div className="Rform" >
+                        <form>
+                            <input type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />
+                            <input type="password" ref="password" placeholder="PASSWORD" onChange={this.passwordChanged.bind(this)} />
+                            <input type="submit" value="SUBMIT" onClick={this.submit.bind(this)} />
+                        </form>
+                        <br />
+                        <a href="/register">Sign up</a>
+                    </div>
                 </div>
             </div>
         );
