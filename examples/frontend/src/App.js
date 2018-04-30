@@ -6,6 +6,7 @@ import {
   Route
 } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage.js';
+import RegisterPage from './RegisterPage/RegisterPage.js'
 import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
         <Router>
           <div>
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/selectRoom" component={SelectRoomPage} />
           </div>
         </Router>

@@ -14,8 +14,8 @@ router.post('/submit', function (req, res) {
         if (err) {
             console.error("Unable to get item. Error JSON:", JSON.stringify(err, null, 2));
             return res.json({
-                result: false,
-                msg_id: 0
+                "isOk": false,
+                "username": ""
             })
         } else {
             console.log("Get item succeeded:", JSON.stringify(data, null, 2));
@@ -32,8 +32,6 @@ router.post('/submit', function (req, res) {
             res.send(krtn);
         }
     });
-
-
 });
 
 module.exports = router;

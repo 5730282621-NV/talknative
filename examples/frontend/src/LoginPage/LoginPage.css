@@ -11,13 +11,17 @@
 
 .sign {
     float: left;
-    margin-bottom: 15px;
     font-size: 24px;
     font-weight: bold;
     color: #50a0e0;
 }
 
-.LoginImage {
+.Rform {
+    margin-top: 45px;
+    font-size: 16px;
+}
+
+.KeeImage {
     margin-top: 80px;
     padding-top: 180px;
     width: 100%;
@@ -30,7 +34,7 @@
     background-size: cover;
 }
 
-.LoginTitle {
+.KeeTitle {
     margin-top: -300px;
     color: #ffffff;
     font-size: 72px;
@@ -96,7 +100,6 @@ input[type=submit]{
     width: 100%;
     height: 60px;
     margin: 0;
-    margin-bottom: 25px;
     padding: 12px 20px;
     border-radius: 6px;
     box-sizing: border-box;
@@ -104,19 +107,19 @@ input[type=submit]{
     font-size: 21px;
     font-weight: bold;
     color: #ffffff;
-    background-color: #50a0e0;
+    background-color: #805030;
     transition: 0.5s;
 }
 
 input[type=submit]:hover{
-    background-color: #4090d0;
+    background-color: #d06810;
     box-shadow: 0 4px 5px #888888;
     transform: translateY(-4px);
     transition: 0.5s;
 }
 
 input[type=submit]:active{
-    background-color: #888888;
+    background-color: #b04020;
     box-shadow: none;
     transform: translateY(4px);
     transition: 0.1s;

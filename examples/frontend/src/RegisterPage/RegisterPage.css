@@ -3,3 +3,190 @@
     text-align: center;
     color: #000000;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #000000;
+    opacity: 0.3; /* Firefox */
+}
+
+.sign {
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    color: #50a0e0;
+}
+
+.KeeImage {
+    margin-top: 80px;
+    padding-top: 180px;
+    width: 100%;
+    height: 500px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.KeeTitle {
+    margin-top: -300px;
+    color: #ffffff;
+    font-size: 72px;
+    font-weight: bold;
+    text-shadow: 6px 8px 10px #000000, 0px 0px 30px #404040;
+}
+
+.RegisterPanel {
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    padding: 40px 100px 40px 100px;
+    width: 100%;
+    max-width: 1000px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 1);
+    box-sizing: border-box;
+    box-shadow: 6px 8px 10px 0 rgba(0, 0, 0, 0.4), 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.Rform {
+    text-align: left;
+    margin: auto;
+    margin-top: 0;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.Rtag {
+    width: 100%;
+}
+
+.KeeText{
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #303030;
+    background-color: #f0f0f0;
+}
+
+.KeeText:focus{
+    border: 3px solid #b0b0b0;
+    background-color: #ffffff;
+}
+
+.KeePass{
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #303030;
+    background-color: #f0f0f0;
+}
+
+.KeePass:focus{
+    border: 3px solid #b0b0b0;
+    background-color: #ffffff;
+}
+
+.KeeMail {
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #303030;
+    background-color: #f0f0f0;
+}
+
+.KeeMail:focus {
+    border: 3px solid #b0b0b0;
+    background-color: #ffffff;
+}
+
+.KeeSubmit{
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: none;
+    font-size: 21px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #50a0e0;
+    transition: 0.5s;
+}
+
+.KeeSubmit:hover{
+    background-color: #4090d0;
+    box-shadow: 0 4px 5px #888888;
+    transform: translateY(-4px);
+    transition: 0.5s;
+}
+
+.KeeSubmit:active{
+    background-color: #888888;
+    box-shadow: none;
+    transform: translateY(4px);
+    transition: 0.1s;
+}
+
+.KeeSelect{
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: none;
+    font-size: 21px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #50a0e0;
+    transition: 0.5s;
+}
+
+.KeeSelect:hover{
+    background-color: #4090d0;
+    transition: 0.5s;
+}
+
+.KeeSelect:active{
+    background-color: #888888;
+    transition: 0.1s;
+}
+
+.KeeOption{
+    width: 100%;
+    height: 60px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: none;
+    font-size: 21px;
+    font-weight: bold;
+    color: #50a0e0;
+    background-color: #ffffff;
+    transition: 0.5s;
+}

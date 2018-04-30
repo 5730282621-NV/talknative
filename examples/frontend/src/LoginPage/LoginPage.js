@@ -49,16 +49,21 @@ class LoginPage extends Component {
     render() {
         return (
             <div className="LoginPage">
-                <div className="LoginImage"></div>
-                <div className="LoginTitle">TALKNATIVE</div>
+                <div className="KeeImage"></div>
+                <div className="KeeTitle">TALKNATIVE</div>
                 <div className="LoginPanel">
                     <div className="sign" >Sign in</div>
-                    <form>
-                        <input type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />
-                        <input type="password" ref="password" placeholder="PASSWORD" onChange={this.passwordChanged.bind(this)} />
-                        <input type="submit" value="SUBMIT" onClick={this.submit.bind(this)} />
-                    </form>
-                    <a href="/register">Sign up</a>
+                    <br/>
+                    <br/>
+                    <div className="Rform" >
+                        <form>
+                            <input type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />
+                            <input type="password" ref="password" placeholder="PASSWORD" onChange={this.passwordChanged.bind(this)} />
+                            <input type="submit" value="SUBMIT" onClick={this.submit.bind(this)} />
+                        </form>
+                        <br />
+                        <a href="/register">Sign up</a>
+                    </div>
                 </div>
             </div>
         );
