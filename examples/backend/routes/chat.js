@@ -121,4 +121,71 @@ router.post('/leave_room', function (req,res) {
 	});
 
 });
+
+router.post('/get_last_seen', function (req,res) {
+	var chat_room_id = req.body.chat_room_id;
+  	var username = req.body.username;
+	var params = {
+		TableName : "chat_session",
+	    Key: {
+	    	"chat_room_id": chat_room_id,
+	    	"username": username
+	    }
+
+	};
+
+	docClient.get(params, function(err, data) {
+	    if (err) {
+	        console.log("Unable to get item. Error:", JSON.stringify(err, null, 2));
+	        return res.json({
+				result: false
+		    })
+	    } else {
+	        console.log("Get item succeeded.");
+	        item = data['Item']
+	        if(item != null){
+		        return res.json({
+		        	last_seen_msg_id: item['last_seen_msg_id'],
+					result: true
+			    })
+	    	}
+	    	else{
+		        return res.json({
+					result: false
+			    })
+	    	}
+	    }
+	});
+
+});
+router.post('/update_last_seen', function (req,res) {
+	var chat_room_id = req.body.chat_room_id;
+  	var username = req.body.username;
+  	var last_seen_msg_id = req.body.last_seen_msg_id;
+	var params = {
+		TableName : "chat_session",
+	    Key: {
+	    	"chat_room_id": chat_room_id,
+	    	"username": username,
+	    },
+	    UpdateExpression: "set last_seen_msg_id = :l",
+	    ExpressionAttributeValues:{
+	        ":l":last_seen_msg_id
+	    }
+	};
+
+	docClient.update(params, function(err, data) {
+	    if (err) {
+	        console.log("Unable to update item. Error:", JSON.stringify(err, null, 2));
+	        return res.json({
+				result: false
+		    })
+	    } else {
+	    	return res.json({
+					result: true
+			    })
+	    }
+	});
+
+});
 module.exports = router;

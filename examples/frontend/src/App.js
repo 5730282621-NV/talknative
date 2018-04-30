@@ -10,9 +10,6 @@ import RegisterPage from './RegisterPage/RegisterPage.js'
 import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
 
 class App extends Component {
-  componentDidMount() {
-    
-  }
 
   render() {
     return (
