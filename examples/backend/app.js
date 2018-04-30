@@ -27,7 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
-// app.use('/selectroom', selectRoomRouter);
+app.use('/selectroom', selectRoomRouter);
 app.use('/chat', chatRouter);
 
 // catch 404 and forward to error handler

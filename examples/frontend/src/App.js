@@ -6,6 +6,7 @@ import {
   Route
 } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage.js';
+import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
 
 class App extends Component {
   componentDidMount() {
@@ -16,7 +17,10 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Route exact path="/login" component={LoginPage} />
+          <div>
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/selectRoom" component={SelectRoomPage} />
+          </div>
         </Router>
       </div>
     );

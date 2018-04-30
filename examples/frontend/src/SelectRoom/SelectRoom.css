@@ -1,0 +1,45 @@
+.language-menu{
+    background-color: #f0f0f0;
+    font-family: Helvetica;
+    padding: 10px;
+    border-bottom: 1px solid #B0A4CA;
+    color: #604C8D;
+    text-align: left;
+}
+
+.room-menu{
+    background-color: white;
+    color: #422D72;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgb(204, 192, 233);
+}
+
+.select-room-content{
+    width: 75%
+}
+
+.select-room-user-profile{
+    width: 25%;
+    background-color: #f0f0f0;
+}
+
+.select-room-page{
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh;
+    height: 100%;
+}
+
+.profile-pic{
+    border-radius: 50%;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    background-image: url("./asset/Daa_5e1VMAEYBtb.jpg");
+    background-size: cover;
+}
+
+.profile-info{
+    margin: 10px 0px;
+}
