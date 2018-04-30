@@ -8,7 +8,6 @@ import {
 import LoginPage from './LoginPage/LoginPage.js';
 
 class App extends Component {
-<<<<<<< HEAD
   componentDidMount(){
     const url_album = '/chat'
     fetch(url_album, {
@@ -19,10 +18,6 @@ class App extends Component {
       console.log(results)
       }
     )
-=======
-  componentDidMount() {
-    
->>>>>>> 4a766d84014b96de469e44c4723b223457dcf1f3
   }
 
   render() {
