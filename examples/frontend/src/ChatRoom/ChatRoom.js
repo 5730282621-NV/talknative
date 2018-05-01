@@ -204,7 +204,7 @@ class ChatRoomPage extends React.Component {
             body: JSON.stringify(body2)
           })
 
-        .then(res => res.json())
+        .then(res => res.json()) 
         .then(result => {
             console.log(result);
 
