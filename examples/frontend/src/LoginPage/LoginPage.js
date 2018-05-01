@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './LoginPage.css';
+import {withRouter} from 'react-router-dom'
 
 class LoginPage extends Component {
 
@@ -23,7 +24,7 @@ class LoginPage extends Component {
         });
     }
 
-    submit(event) {
+    submit = (event) => {
         console.log(this.state);
 
         let u = this.state.username;
@@ -41,8 +42,10 @@ class LoginPage extends Component {
             }).then(body => {
                 console.log(body);
                 if (body.isOk && body.username == u) {
+                    console.log(u);
                     this.props.action(u);
-                    window.location = "/selectRoom";
+                    this.props.history.push('/selectRoom');
+                    //window.location = "/selectRoom";
                 } else {
                     alert('Invalid username or password!');
                 }
@@ -57,8 +60,6 @@ class LoginPage extends Component {
                 <div className="KeeTitle">TALKNATIVE</div>
                 <div className="LoginPanel">
                     <div className="sign" >Sign in</div>
-                    <br/>
-                    <br/>
                     <div className="Rform" >
                         <form>
                             <input type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />
@@ -74,4 +75,4 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);
