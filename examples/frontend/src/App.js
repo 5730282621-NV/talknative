@@ -41,14 +41,14 @@ class App extends React.Component {
           action={this.handler.bind(this)}
         />
       );
-    }/*
+    }
     const MyChatRoomPage = (props) => {
       return (
         <ChatRoomPage 
           current_user={this.state.current_user}
         />
       );
-    }*/
+    }
     const MySelectRoomPage = (props) => {
       return (
         <SelectRoomPage

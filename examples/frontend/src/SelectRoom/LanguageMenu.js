@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import {withRouter} from 'react-router-dom'
 
 class LanguageMenu extends Component {
     constructor(){
@@ -26,7 +27,7 @@ class LanguageMenu extends Component {
       }).then(response => {return response.json()})
       .then(result => {
         console.log("Enter chat room : "+result.chat_room_id);
-        window.location = "/Chat/"+result.chat_room_id;
+        this.props.history.push("/Chat/"+result.chat_room_id);
       })
     }
   
@@ -34,10 +35,17 @@ class LanguageMenu extends Component {
       let roomList;
       if(this.state.roomVisible) {
         roomList = this.props.rooms.map(room =>{
+          let imgSrc;
+          try{
+            imgSrc = require('./asset/chat_icon/'+room.chat_room_id+'.png')
+          }
+          catch(err) {
+            imgSrc = require('./asset/chat_icon/'+'TH01'+'.png')
+          }
           return (
           <div className="room-menu" >
             <div className="chat-room-icon-detail">
-              <img className="chat-room-icon" src={require('./asset/chat_icon/'+room.chat_room_id+'.png')} />
+              {<img className="chat-room-icon" src={imgSrc} />}
               <div>
                 <div style={{fontSize:"20px"}}>{room.chat_room_id} : {room.chat_room_name}</div>
                 <div style={{fontSize:"17px"}}>members : {room.n_active_user}</div>
@@ -59,4 +67,4 @@ class LanguageMenu extends Component {
     }
   }
   
-  export default LanguageMenu;
+  export default withRouter(LanguageMenu);

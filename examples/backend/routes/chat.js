@@ -24,6 +24,7 @@ router.post('/get_msg_id', function (req, res) {
 	    } else {
 	        console.log("Get item succeeded:", JSON.stringify(data, null, 2));
 	        msg_id = data['Item']['last_msg_id']+1;
+	       	console.log("msg_id",msg_id);
 			return res.json({
 				result: true,
 		    	msg_id: msg_id
@@ -85,16 +86,23 @@ router.post('/get_new_msg', function (req,res) {
 		    })
 	    } else {
 	        console.log("Query succeeded.");
-	        return res.json({
-				result: true,
-				msg_list: data['Items']
-		    })
+	        if(data['Items'].length > 0){
+		        return res.json({
+					result: true,
+					msg_list: data['Items']
+			    })
+			}
+			else{
+		        return res.json({
+					result: false
+			    })				
+			}
 	    }
 	});
 
 });
 
-router.post('/leave_room', function (req,res) {
+router.post('/delete_session', function (req,res) {
 	var chat_room_id = req.body.chat_room_id;
   	var username = req.body.username;
 	var params = {
@@ -172,6 +180,59 @@ router.post('/update_last_seen', function (req,res) {
 	    ExpressionAttributeValues:{
 	        ":l":last_seen_msg_id
 	    }
+	};
+
+	docClient.update(params, function(err, data) {
+	    if (err) {
+	        console.log("Unable to update item. Error:", JSON.stringify(err, null, 2));
+	        return res.json({
+				result: false
+		    })
+	    } else {
+	    	return res.json({
+					result: true
+			    })
+	    }
+	});
+
+});
+router.post('/update_last_msg_id', function (req,res) {
+	var chat_room_id = req.body.chat_room_id;
+	var params = {
+		TableName : "chat_room",
+	    Key: {
+	    	"chat_room_id": chat_room_id
+	    },
+	    UpdateExpression: "set last_msg_id = last_msg_id + :val",
+	    ExpressionAttributeValues:{
+	        ":val":1
+	    },
+	};
+	docClient.update(params, function(err, data) {
+	    if (err) {
+	        console.log("Unable to update item. Error:", JSON.stringify(err, null, 2));
+	        return res.json({
+				result: false
+		    })
+	    } else {
+	    	return res.json({
+					result: true
+			    })
+	    }
+	});
+
+});
+router.post('/delete_n_user', function (req,res) {
+	var chat_room_id = req.body.chat_room_id;
+	var params = {
+		TableName : "chat_room",
+	    Key: {
+	    	"chat_room_id": chat_room_id
+	    },
+	    UpdateExpression: "set n_active_user = n_active_user - :val",
+	    ExpressionAttributeValues:{
+	        ":val":1
+	    },
 	};
 
 	docClient.update(params, function(err, data) {
