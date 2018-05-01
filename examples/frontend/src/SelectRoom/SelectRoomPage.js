@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import LanguageMenu from './LanguageMenu.js'
+import Header from '../Header/Header.js'
+import PersonalInfo from '../Header/PersonalInfo.js'
 import './SelectRoom.css'
 
 class SelectRoomPage extends Component {
@@ -8,8 +10,7 @@ class SelectRoomPage extends Component {
       console.log(this.props);
       this.state={
         rooms:[{}],
-        userProfile:{},
-        username:props.current_user
+        username:this.props.current_user
       }
     }
 
@@ -24,24 +25,6 @@ class SelectRoomPage extends Component {
           result.push({language:"end"})
           this.setState({rooms: result});
         });
-
-
-      fetch('/selectRoom/getUserProfile',{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            "username": this.state.username
-        })
-      }).then(response => {
-        return response.json()}
-      ).then(result => {
-        console.log("get user profile successfully");
-        console.log(result);
-        this.setState({userProfile: result});
-      })
-      .catch(err => {
-        console.log(err);
-      });
     }
   
     render() {
@@ -65,18 +48,9 @@ class SelectRoomPage extends Component {
 
       return (
         <div  class="select-room-page">
-          <div className="select-room-header">   
-            <div className="header-icon"></div>
-            <div>TALKNATIVE</div>
-          </div>
+          <Header />
           <div className="select-room-body">
-            <div className="select-room-user-profile">
-              <div className="profile-pic"></div>
-              <div className="profile-info">
-                <div style={{fontWeight: "bold",fontSize:"20px"}}>{this.state.userProfile.displayname}</div>
-                <div>Native Language : {this.state.userProfile.native_language}</div>
-              </div>
-            </div>
+            <PersonalInfo current_user={this.state.username} />
             <div className="select-room-content">{languageList}</div>
           </div>
         </div>
