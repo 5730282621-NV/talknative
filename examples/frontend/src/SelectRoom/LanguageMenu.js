@@ -27,7 +27,12 @@ class LanguageMenu extends Component {
       }).then(response => {return response.json()})
       .then(result => {
         console.log("Enter chat room : "+result.chat_room_id);
-        this.props.history.push("/Chat/"+result.chat_room_id);
+
+        this.props.history.push({
+          pathname: "/Chat",
+          state: { chat_room_id: result.chat_room_id }
+        })
+       
       })
     }
   
@@ -37,10 +42,10 @@ class LanguageMenu extends Component {
         roomList = this.props.rooms.map(room =>{
           let imgSrc;
           try{
-            imgSrc = require('./asset/chat_icon/'+room.chat_room_id+'.png')
+            imgSrc = require('./asset/chat_icon/'+room.chat_room_id.substring(3,4) +'.png')
           }
           catch(err) {
-            imgSrc = require('./asset/chat_icon/'+'TH01'+'.png')
+            imgSrc = require('./asset/chat_icon/'+'01'+'.png')
           }
           return (
           <div className="room-menu" >
