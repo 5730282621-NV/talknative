@@ -34,29 +34,4 @@ router.post('/submit', function (req, res) {
     });
 });
 
-router.post('/test', function (req, res) {
-
-    var AWS3 = require("aws-sdk");
-    env = process.env;
-
-    AWS3.config.update({
-        region: "ap-southeast-1",
-        accessKeyId: env.S3_KEY,
-        secretAccessKey: env.S3_SECRET,
-        endpoint: "s3.ap-southeast-1.amazonaws.com"
-    });
-
-    var S3 = new AWS3.S3();
-
-    var params = {
-        Bucket: 'talknative',
-        Key: req.body.fileName
-    };
-
-    S3.getSignedUrl('getObject', params, function(err, url){
-        console.log('the url of the image is', url);
-        res.send(url);
-    })
-});
-
 module.exports = router;
