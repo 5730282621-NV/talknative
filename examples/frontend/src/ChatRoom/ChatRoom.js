@@ -1,29 +1,31 @@
   
 import React, { Component } from 'react';
 import './ChatRoom.css';
-import { pic } from './images/speech-bubble.png'
+import Header from '../Header/Header.js'
+import PersonalInfo from '../Header/PersonalInfo.js'
+
 class ChatRoomPage extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      // username:this.props.current_user,
-      username:"Jijy",
+      username:this.props.current_user,
+      // username:"Jijy",
       displayname:"",
       native_lang:"",
       // chat_room_id: this.props.chat_room_id
-      chat_room_id:"TH01",
+      chat_room_id:"",
       last_seen_msg_id:"",
       list: [],
       inputValue:""
     }
     this.setPersonalInfo = this.setPersonalInfo.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
-    // this.getMsgID = this.getMsgID.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
     this.getNewMsg = this.getNewMsg.bind(this);
     this.getLastSeen = this.getLastSeen.bind(this);
     this.renderNewMsg = this.renderNewMsg.bind(this);
 }
+
 ////////////////////////////////////////////////////////////// CALL BACKEND API ////////////////////////////////////////////////////////////
   setPersonalInfo(){
     let body = { username: this.state.username};
@@ -49,7 +51,7 @@ class ChatRoomPage extends React.Component {
   
   componentDidMount(){
     this.setPersonalInfo(); 
-    this.interval = setInterval(() =>{this.getNewMsg();},4000)
+    this.interval = setInterval(() =>{this.getNewMsg();},500);
   }
    
   componentWillUnmount(){
@@ -76,8 +78,9 @@ class ChatRoomPage extends React.Component {
           chat_room_id: this.state.chat_room_id,
           msg:this.state.inputValue,
           username: this.state.username,
-          msg_id: result.msg_id+1
+          msg_id: result.msg_id
         };
+        console.log(body2);
             fetch('/chat/send_msg/', {
               method: 'POST',
               headers: {
@@ -89,7 +92,8 @@ class ChatRoomPage extends React.Component {
             .then(res => res.json())
             .then(result => {
               if(!result.result){
-                console.log("error")
+                console.log("insert msg to table error")
+                return;
               }
             })
             .then(result=>{
@@ -105,12 +109,14 @@ class ChatRoomPage extends React.Component {
             .then(res => res.json())
             .then(result => {
               if(!result.result){
-                console.log("error")
+                console.log("update msg id error");
+                return;
               }
+              this.clearInputValue();
             })             
             });
       })
-    this.clearInputValue();
+    
   }
 
   leaveRoom(){
@@ -265,41 +271,49 @@ class ChatRoomPage extends React.Component {
       inputValue: ""
     });   
   }
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      this.sendMessage();
+    }
+  }
   render() {
 
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 c6" style={{"height":"50px"}}>
-          </div>
-        </div>
-        <div className="row" >
-          <div className="col-lg-4 c2" style={{"height":"600px"}}>
-            <p style={{"color":"#fff"}}>Display Name : {this.state.displayname}</p>
-            <p style={{"color":"#fff"}}>Native Language : {this.state.native_lang}</p>
-            <button type="button" className="btn c4" onClick={this.leaveRoom}>leave</button>
-
-          </div>
-          <div className="col-lg-8 c5" style={{"height":"600px"}}>
-            <div className="row">
-              <div className="col-lg-12 c5 messages" style={{"height":"400px"}}>
-                <ul className="f5">
-                  {this.state.list}
-                </ul>
+        <div  class="select-room-page">
+          <Header />
+          <div className="select-room-body">
+            <PersonalInfo current_user={this.state.username} />
+            
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12 c3" style={{"height":"50px"}}>
+                <button type="button" className="btn c4" onClick={this.leaveRoom}>leave</button>
+                </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12 message-input c3" style={{"height":"200px"}}>
-                <div className="wrap">
-                  <input style={{"height":"150px"}}type="text" placeholder="Write your message..." value={this.state.inputValue} onChange={this.updateInputValue.bind(this)}/>
-                  <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
-                  <button className="btn c4" onClick={this.sendMessage}>Send</button>
+              <div className="row" >
+                <div className="col-lg-12 c5">
+                  <div className="row">
+                    <div className="col-lg-12 c5 messages" style={{"height":"500px"}}>
+                      <ul className="f5">
+                        {this.state.list}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12 message-input c3" style={{"height":"200px"}}>
+                      <div className="wrap">
+                        <input style={{"height":"150px","padding-top":"10px"}}type="text" placeholder="Write your message..." value={this.state.inputValue} onKeyPress={this.handleKeyPress.bind(this)} onChange={this.updateInputValue.bind(this)}/>
+                        <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
+                        <button className="btn c4" onClick={this.sendMessage}>Send</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+
     );
   }
 }

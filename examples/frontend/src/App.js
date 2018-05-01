@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage.js';
 import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
-//import ChatRoomPage from './ChatRoom/ChatRoom.js';
+import ChatRoomPage from './ChatRoom/ChatRoom.js';
 
 
 class App extends React.Component {
@@ -40,14 +40,14 @@ class App extends React.Component {
           action={this.handler.bind(this)}
         />
       );
-    }/*
+    }
     const MyChatRoomPage = (props) => {
       return (
         <ChatRoomPage 
           current_user={this.state.current_user}
         />
       );
-    }*/
+    }
     const MySelectRoomPage = (props) => {
       return (
         <SelectRoomPage
@@ -61,7 +61,7 @@ class App extends React.Component {
           <div>
             <Route exact path="/" component={MyLoginPage} />
             <Route exact path="/selectRoom" component={MySelectRoomPage} />
-            {/* <Route exact path="/chat" component={MyChatRoomPage}/> */}
+            <Route path="/Chat/:chat_room_id" component={MyChatRoomPage}/>
 
           </div>
         </Router>
