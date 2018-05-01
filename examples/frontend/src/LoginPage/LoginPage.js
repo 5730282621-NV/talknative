@@ -38,6 +38,7 @@ class LoginPage extends Component {
             }).then(body => {
                 console.log(body);
                 if (body.isOk && body.username == this.state.username) {
+                    
                     window.location = "/";
                 } else {
                     alert('Invalid username or password!');
