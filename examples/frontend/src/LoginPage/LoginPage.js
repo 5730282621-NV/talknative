@@ -8,8 +8,7 @@ class LoginPage extends Component {
         super();
         this.state = {
             username: "",
-            password: "",
-            testImg: ""
+            password: ""
         }
     }
 
@@ -54,23 +53,6 @@ class LoginPage extends Component {
         event.preventDefault();
     }
 
-    test = (event) => {
-        fetch('/login/test', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                "fileName" : "Daniel-Conway-Scorched-Earth.jpg"
-            })
-        }).then(response => {
-            return response.text();
-        }).then(url => {
-            console.log(url);
-            this.setState({
-                testImg: url
-            });
-        })
-    }
-
     render() {
         return (
             <div className="LoginPage">
@@ -78,6 +60,8 @@ class LoginPage extends Component {
                 <div className="KeeTitle">TALKNATIVE</div>
                 <div className="LoginPanel">
                     <div className="sign" >Sign in</div>
+                    <br/>
+                    <br/>
                     <div className="Rform" >
                         <form>
                             <input type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />

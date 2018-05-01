@@ -13,8 +13,30 @@ class RegisterPage extends Component {
             firstName: "",
             LastName: "",
             email: "",
+            profilePicName: "bear.png",
             nativeLanguage: "Thai"
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            profilePicName: this.refs.profilePreview.value
+        });
+
+        fetch('/register/selectProfilePic', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "fileName" : 'bear.png'
+            })
+        }).then(response => {
+            return response.text();
+        }).then(url => {
+            console.log(url);
+            this.setState({
+                profilePreview: url
+            });
+        })
     }
 
     usernameChanged() {
@@ -65,6 +87,27 @@ class RegisterPage extends Component {
         });
     }
 
+    profilePreviewChanged() {
+        this.setState({
+            profilePicName: this.refs.profilePreview.value
+        });
+
+        fetch('/register/selectProfilePic', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "fileName" : this.refs.profilePreview.value
+            })
+        }).then(response => {
+            return response.text();
+        }).then(url => {
+            console.log(url);
+            this.setState({
+                profilePreview: url
+            });
+        })
+    }
+
     submit(event) {
         console.log(this.state);
 
@@ -93,14 +136,17 @@ class RegisterPage extends Component {
                 "firstName": this.state.firstName,
                 "LastName": this.state.LastName,
                 "email": this.state.email,
-                "nativeLanguage": this.state.nativeLanguage
+                "nativeLanguage": this.state.nativeLanguage,
+                "profilePicName": this.state.profilePicName
             })
         })
             .then(response => {
                 return response.json();
             }).then(body => {
                 console.log(body);
-
+                if (body.isOk) {
+                    window.location = "/";
+                }
             });
         event.preventDefault();
     }
@@ -145,11 +191,31 @@ class RegisterPage extends Component {
                                 <option className="KeeOption" value="Japanese">Japanese</option>
                                 <option className="KeeOption" value="Chinese">Chinese</option>
                             </select>
-
+                            
+                        </div>
+                            <hr />
+                            <div className="sign" >Profile Picture</div>
                             <br />
                             <br />
                             <br />
-
+                        <div className="Rform" >
+                            <div className="KeeProfileDiv">
+                                <img className="KeeProfilePic" ref="profilePreview" src={this.state.profilePreview}/>
+                            </div>
+                            <select className="KeeSelect" ref="profilePreview" value={this.state.profilePicName} onChange={this.profilePreviewChanged.bind(this)} required>
+                                <option className="KeeOption" value="bear.png">Bear</option>
+                                <option className="KeeOption" value="bee.png">Bee</option>
+                                <option className="KeeOption" value="chicken.png">Chicken</option>
+                                <option className="KeeOption" value="deer.png">Deer</option>
+                                <option className="KeeOption" value="fish.png">Fish</option>
+                                <option className="KeeOption" value="jellyfish.png">Jellyfish</option>
+                                <option className="KeeOption" value="koala.png">Koala</option>
+                                <option className="KeeOption" value="monkey.png">Monkey</option>
+                                <option className="KeeOption" value="penguin.png">Penguin</option>
+                                <option className="KeeOption" value="sun.png">Sun</option>
+                                <option className="KeeOption" value="trunk.png">Trunk</option>
+                                <option className="KeeOption" value="whale.png">Whale</option>
+                            </select>
                             <input className="KeeSubmit" type="submit" value="Sign up" onClick={this.submit.bind(this)} />
                         </div>
                     </form>
