@@ -13,7 +13,8 @@ class ChatRoomPage extends React.Component {
       // chat_room_id: this.props.chat_room_id
       chat_room_id:"TH01",
       last_seen_msg_id:"",
-      list: []
+      list: [],
+      inputValue:""
     }
     this.setPersonalInfo = this.setPersonalInfo.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -48,8 +49,7 @@ class ChatRoomPage extends React.Component {
   
   componentDidMount(){
     this.setPersonalInfo(); 
-    this.getNewMsg();
-    // this.interval = setInterval(() =>{this.getNewMsg();},4000)
+    this.interval = setInterval(() =>{this.getNewMsg();},4000)
   }
    
   componentWillUnmount(){
@@ -57,7 +57,7 @@ class ChatRoomPage extends React.Component {
   }
 
   sendMessage(){
-
+    console.log("send msg",this.state.inputValue)
     var msg_id
     let body = { 
       chat_room_id: this.state.chat_room_id
@@ -70,14 +70,13 @@ class ChatRoomPage extends React.Component {
             },
           body: JSON.stringify(body)
         })
-        .then(res => res.json().msg_id)
-        .then(msg_id=>{
-          console.log(msg_id)
+        .then(res => res.json())
+        .then(result=>{
         let body2 = { 
           chat_room_id: this.state.chat_room_id,
-          msg:"mmmmmmm",
+          msg:this.state.inputValue,
           username: this.state.username,
-          msg_id: msg_id
+          msg_id: result.msg_id+1
         };
             fetch('/chat/send_msg/', {
               method: 'POST',
@@ -92,8 +91,26 @@ class ChatRoomPage extends React.Component {
               if(!result.result){
                 console.log("error")
               }
+            })
+            .then(result=>{
+              let body3 = { chat_room_id: this.state.chat_room_id};
+              fetch('/chat/update_last_msg_id/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                  },
+                body: JSON.stringify(body3)
+              })
+            .then(res => res.json())
+            .then(result => {
+              if(!result.result){
+                console.log("error")
+              }
+            })             
             });
       })
+    this.clearInputValue();
   }
 
   leaveRoom(){
@@ -128,7 +145,7 @@ class ChatRoomPage extends React.Component {
         });
   }
   getNewMsg(last_seen_msg_id){
-    console.log("getNewMsg()")
+    console.log("get new msg ();")
     let body0 = { 
       username: this.state.username,
       chat_room_id: this.state.chat_room_id};
@@ -142,7 +159,6 @@ class ChatRoomPage extends React.Component {
         })
         .then(res => res.json())
         .then(result => {
-          console.log(result)
           if(result.result){
             this.setState({last_seen_msg_id: result.last_seen_msg_id});
             return result.last_seen_msg_id;
@@ -163,12 +179,14 @@ class ChatRoomPage extends React.Component {
           })
         .then(res => res.json())
         .then(result => {
-        
+        console.log("before if not success",result)
+        console.log("before if not success",this.state.last_seen_msg_id)
         if(!result.result){return;}
         this.renderNewMsg(result.msg_list);
           let body2 = { 
             username: this.state.username,
             last_seen_msg_id: result.msg_list[result.msg_list.length-1].msg_id,
+            // last_seen_msg_id: 0,
             chat_room_id: this.state.chat_room_id};
 
           fetch('/chat/update_last_seen/', {
@@ -189,7 +207,6 @@ class ChatRoomPage extends React.Component {
     });
   }
   getLastSeen(){
-    console.log("getLastSeen()");
     let body = { 
       username: this.state.username,
       chat_room_id: this.state.chat_room_id};
@@ -203,7 +220,6 @@ class ChatRoomPage extends React.Component {
         })
         .then(res => res.json())
         .then(result => {
-          console.log(result)
           if(result.result){
             this.setState({last_seen_msg_id: result.last_seen_msg_id});
             return result.last_seen_msg_id;
@@ -218,13 +234,19 @@ class ChatRoomPage extends React.Component {
 ////////////////////////////////////////////////////////////// RENDERING ////////////////////////////////////////////////////////////
 
   renderNewMsg(msg_list){
-    console.log("ward roob",msg_list)
+    let new_list = this.state.list
     for (var i = 0; i < msg_list.length; i++) { 
-      let item = <li className='sent'><img src={pic} /><p> { msg_list[i].msg }</p></li>
-      this.state.list.push(item);
-      // msg_list[i].timestamp
-      // msg_list[i].displayname
+      if(msg_list[i].username == this.state.username){
+        new_list.push(<li><span className='badge right c5 f6'> { msg_list[i].username }</span></li>);
+        new_list.push(<li><span className='badge right'> { msg_list[i].msg }</span></li>);
+      }
+      else{
+        new_list.push(<li><span className='badge left c5 f6'> { msg_list[i].username }</span></li>);
+        new_list.push(<li><span className='badge left'> { msg_list[i].msg }</span></li>);       
+      }
+      console.log("render new msg", this.state.list)
     }
+    this.setState({list:new_list});
     // message = $(".message-input input").val();
     // if($.trim(message) == '') {
     //   return false;
@@ -233,7 +255,16 @@ class ChatRoomPage extends React.Component {
     // $('.contact.active .preview').html('<span>You: </span>' + message);
     // $(".messages").animate({ scrollTop: $(document).height() }, "fast");
   }
-
+  updateInputValue(evt) {
+    this.setState({
+      inputValue: evt.target.value
+    });
+  }
+  clearInputValue() {
+    this.setState({
+      inputValue: ""
+    });   
+  }
   render() {
 
     return (
@@ -252,7 +283,7 @@ class ChatRoomPage extends React.Component {
           <div className="col-lg-8 c5" style={{"height":"600px"}}>
             <div className="row">
               <div className="col-lg-12 c5 messages" style={{"height":"400px"}}>
-                <ul>
+                <ul className="f5">
                   {this.state.list}
                 </ul>
               </div>
@@ -260,9 +291,9 @@ class ChatRoomPage extends React.Component {
             <div className="row">
               <div className="col-lg-12 message-input c3" style={{"height":"200px"}}>
                 <div className="wrap">
-                  <input type="text" placeholder="Write your message..." />
+                  <input style={{"height":"150px"}}type="text" placeholder="Write your message..." value={this.state.inputValue} onChange={this.updateInputValue.bind(this)}/>
                   <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
-                  <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true" onClick={this.sendMessage}></i></button>
+                  <button className="btn c4" onClick={this.sendMessage}>Send</button>
                 </div>
               </div>
             </div>
