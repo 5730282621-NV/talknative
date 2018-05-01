@@ -3,48 +3,52 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/createRoom', function(req,res){
-    var params = {
-        TableName : "chat_room",
-        Item : {
-            chat_room_id:'TH04',
-            chat_room_name:'Advanced Thai Conversation',
-            language:'Thai',
-            n_active_user: 2
+    
+    for(i=0;i<4;i++){
+        let chat_room_id='EN0'+(i+1);
+        let chat_room_name='';
+        let language = 'English';
+        switch(i){
+            case 0: 
+                chat_room_name = 'Beginner';
+                break;
+            case 1: 
+                chat_room_name = 'Intermediate';
+                break;
+            case 2: 
+                chat_room_name = 'Upper Intermediate';
+                break;
+            case 3: 
+                chat_room_name = 'Advanced';
+                break;
         }
-    };
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.error("Unable to put item. Error JSON:", JSON.stringify(err, null, 2));
-            return res.json({
-                result: false
-            })
-        } else {
-            console.log("Added item succeeded:", JSON.stringify(data, null, 2));
-            return res.json(params.Item)
-        }
-    });
-    var params = {
-        TableName : "chat_room",
-        Item : {
-            chat_room_id:'TH03',
-            chat_room_name:'Upper Intermediate Thai Conversation',
-            language:'Thai',
-            n_active_user: 3
-        }
-    };
-    docClient.put(params, function(err, data) {
-        if (err) {
-            console.error("Unable to put item. Error JSON:", JSON.stringify(err, null, 2));
-            return res.json({
-                result: false
-            })
-        } else {
-            console.log("Added item succeeded:", JSON.stringify(data, null, 2));
-            return res.json(params.Item)
-        }
-    });
-
-})
+        chat_room_name = chat_room_name.concat(' English Conversation');
+        
+        var params = {
+            TableName : "chat_room",
+            Item : {
+                chat_room_id: chat_room_id,
+                chat_room_name: chat_room_name,
+                language:language,
+                n_active_user: 0
+            }
+        };
+        docClient.put(params, function(err, data) {
+            if (err) {
+                console.error("Unable to put item. Error JSON:", JSON.stringify(err, null, 2));
+                return res.json({
+                    result: false
+                })
+            } else {
+                console.log("Added item succeeded:", JSON.stringify(data, null, 2));
+                
+            }
+        });
+    }
+    return res.json({
+        result: true
+    })
+});
 
 router.get('/getAllRoom', function(req, res,) {
     var params = { TableName : "chat_room"};
@@ -57,46 +61,9 @@ router.get('/getAllRoom', function(req, res,) {
         }
         else{
             console.log("Get item succeeded:", JSON.stringify(data, null, 2));
-            return res.json(data.Items);
-            
+            return res.json(data.Items.sort((function(a,b){return(a.chat_room_id.localeCompare(b.chat_room_id))})));
         }
     })
-
-    //   res.send([{
-//     chat_room_id:'TH01',
-//     chat_room_name:'thailanddd',
-//     language:'Thai',
-//     n_active_user: 8
-//   },
-//   {
-//     chat_room_id:'TH02',
-//     chat_room_name:'thailanddd 2',
-//     language:'Thai',
-//     n_active_user: 6
-//   },
-//   {
-//     chat_room_id:'KR01',
-//     chat_room_name:'All I wanna do, Wanna one',
-//     language:'Korean',
-//     n_active_user: 11
-//   },
-//   {
-//     chat_room_id:'KR02',
-//     chat_room_name:'Saranghaeee',
-//     language:'Korean',
-//     n_active_user: 8
-//   },
-//   {
-//     chat_room_id:'JP01',
-//     chat_room_name:'Japan Today',
-//     language:'Japan',
-//     n_active_user: 6
-//   },
-//   {
-//     chat_room_id:'end',
-//     chat_room_name:'end',
-//     language:'end'
-//   }]);
 });
 
 router.post('/getUserProfile', function(req,res){
@@ -209,8 +176,5 @@ router.post('/EnterChatRoom', function(req,res){
 	});
 
 })
-
-
-
 
 module.exports = router;
