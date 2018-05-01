@@ -4,51 +4,74 @@ var router = express.Router();
 /* GET home page. */
 
 router.get('/createRoom', function(req,res){
-    
     for(i=0;i<4;i++){
-        let chat_room_id='EN0'+(i+1);
-        let chat_room_name='';
-        let language = 'English';
-        switch(i){
-            case 0: 
-                chat_room_name = 'Beginner';
-                break;
-            case 1: 
-                chat_room_name = 'Intermediate';
-                break;
-            case 2: 
-                chat_room_name = 'Upper Intermediate';
-                break;
-            case 3: 
-                chat_room_name = 'Advanced';
-                break;
+        let chat_room_id = 'TH';
+        chat_room_id = chat_room_id+'0'+(i+1);
+    var params = {
+        TableName : "chat_room",
+        Key: {
+            "chat_room_id": chat_room_id,
+        },
+        UpdateExpression: "set last_msg_id = :l",
+        ExpressionAttributeValues:{
+            ":l":0
         }
-        chat_room_name = chat_room_name.concat(' English Conversation');
+    };
+
+    docClient.update(params, function(err, data) {
+        if (err) {
+            console.log("Unable to update item. Error:", JSON.stringify(err, null, 2));
+            return res.json({
+                result: false
+            })
+        } 
+        return res.json({result:true})
+    });}
+    
+    // for(i=0;i<4;i++){
+    //     let chat_room_id='EN0'+(i+1);
+    //     let chat_room_name='';
+    //     let language = 'English';
+    //     switch(i){
+    //         case 0: 
+    //             chat_room_name = 'Beginner';
+    //             break;
+    //         case 1: 
+    //             chat_room_name = 'Intermediate';
+    //             break;
+    //         case 2: 
+    //             chat_room_name = 'Upper Intermediate';
+    //             break;
+    //         case 3: 
+    //             chat_room_name = 'Advanced';
+    //             break;
+    //     }
+    //     chat_room_name = chat_room_name.concat(' English Conversation');
         
-        var params = {
-            TableName : "chat_room",
-            Item : {
-                chat_room_id: chat_room_id,
-                chat_room_name: chat_room_name,
-                language:language,
-                n_active_user: 0
-            }
-        };
-        docClient.put(params, function(err, data) {
-            if (err) {
-                console.error("Unable to put item. Error JSON:", JSON.stringify(err, null, 2));
-                return res.json({
-                    result: false
-                })
-            } else {
-                console.log("Added item succeeded:", JSON.stringify(data, null, 2));
+    //     var params = {
+    //         TableName : "chat_room",
+    //         Item : {
+    //             chat_room_id: chat_room_id,
+    //             chat_room_name: chat_room_name,
+    //             language:language,
+    //             n_active_user: 0
+    //         }
+    //     };
+    //     docClient.put(params, function(err, data) {
+    //         if (err) {
+    //             console.error("Unable to put item. Error JSON:", JSON.stringify(err, null, 2));
+    //             return res.json({
+    //                 result: false
+    //             })
+    //         } else {
+    //             console.log("Added item succeeded:", JSON.stringify(data, null, 2));
                 
-            }
-        });
-    }
-    return res.json({
-        result: true
-    })
+    //         }
+    //     });
+    // }
+    // return res.json({
+    //     result: true
+    // })
 });
 
 router.get('/getAllRoom', function(req, res,) {
