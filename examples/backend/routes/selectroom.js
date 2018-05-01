@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/getAllRoom', function(req, res,) {
+router.get('/getAllRoom', function(req, res) {
   res.send([{
     chat_room_id:'TH01',
     chat_room_name:'thailanddd',
