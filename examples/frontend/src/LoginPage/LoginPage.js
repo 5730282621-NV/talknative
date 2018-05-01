@@ -25,11 +25,14 @@ class LoginPage extends Component {
 
     submit(event) {
         console.log(this.state);
+
+        let u = this.state.username;
+
         fetch('/login/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                "username": this.state.username,
+                "username": u,
                 "password": this.state.password
             })
         })
@@ -37,9 +40,9 @@ class LoginPage extends Component {
                 return response.json();
             }).then(body => {
                 console.log(body);
-                if (body.isOk && body.username == this.state.username) {
-                    
-                    window.location = "/";
+                if (body.isOk && body.username == u) {
+                    this.props.action(u);
+                    window.location = "/selectRoom";
                 } else {
                     alert('Invalid username or password!');
                 }
