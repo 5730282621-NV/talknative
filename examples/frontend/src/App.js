@@ -3,50 +3,54 @@ import logo from './logo.svg';
 import './App.css';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Link,
+  Redirect,
+  withRouter
 } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage.js';
 import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
-import ChatRoomPage from './ChatRoom/ChatRoom.js';
+//import ChatRoomPage from './ChatRoom/ChatRoom.js';
+
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        // Bind the this context to the handler function
-        this.handler = this.handler.bind(this);
+    // Bind the this context to the handler function
+    this.handler = this.handler.bind(this);
 
-        // Set some state
-        this.state = {
-            "current_user": ""
-        };
-    }
+    // Set some state
+    this.state = {
+      "current_user": ""
+    };
+  }
 
-    // This method will be sent to the child component
-    handler(username) {
-        this.setState({
-            "current_user": username
-        });
-    }
+  // This method will be sent to the child component
+  handler(username) {
+    this.setState({
+      "current_user": username
+    });
+  }
 
   render() {
     const MyLoginPage = (props) => {
       return (
-        <LoginPage 
+        <LoginPage
           action={this.handler.bind(this)}
         />
       );
-    }
+    }/*
     const MyChatRoomPage = (props) => {
       return (
         <ChatRoomPage 
           current_user={this.state.current_user}
         />
       );
-    }
+    }*/
     const MySelectRoomPage = (props) => {
       return (
-        <SelectRoomPage 
+        <SelectRoomPage
           current_user={this.state.current_user}
         />
       );
@@ -55,9 +59,9 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <div>
-            <Route exact path="/login" component={MyLoginPage}/>
+            <Route exact path="/" component={MyLoginPage} />
             <Route exact path="/selectRoom" component={MySelectRoomPage} />
-            <Route exact path="/chat" component={MyChatRoomPage}/>
+            {/* <Route exact path="/chat" component={MyChatRoomPage}/> */}
 
           </div>
         </Router>

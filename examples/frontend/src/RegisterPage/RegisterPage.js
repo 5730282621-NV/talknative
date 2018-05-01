@@ -67,6 +67,21 @@ class RegisterPage extends Component {
 
     submit(event) {
         console.log(this.state);
+
+        let isOk = true;
+        if(this.state.username == "") isOk = false;
+        if(this.state.password == "") isOk = false;
+        if(this.state.confirmPassword == "") isOk = false;
+        if(this.state.displayName == "") isOk = false;
+        if(this.state.firstName == "") isOk = false;
+        if(this.state.lastName == "") isOk = false;
+        if(this.state.email == "") isOk = false;
+        if(this.state.nativeLanguage == "") isOk = false;
+
+        if (!isOk) {
+            alert('Please complete the form!');
+        }
+
         fetch('/register/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -101,13 +116,13 @@ class RegisterPage extends Component {
                             <br />
                             <br />
                             Username
-                            <input className="KeeText" type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} />
+                            <input className="KeeText" type="text" ref="username" placeholder="USERNAME" onChange={this.usernameChanged.bind(this)} required/>
                             Password
-                            <input className="KeePass" type="password" ref="password" placeholder="PASSWORD" onChange={this.passwordChanged.bind(this)} />
+                            <input className="KeePass" type="password" ref="password" placeholder="PASSWORD" onChange={this.passwordChanged.bind(this)} required/>
                             Confirm password
-                            <input className="KeePass" type="password" ref="confirmPassword" placeholder="CONFIRM PASSWORD" onChange={this.confirmPasswordChanged.bind(this)} />
+                            <input className="KeePass" type="password" ref="confirmPassword" placeholder="CONFIRM PASSWORD" onChange={this.confirmPasswordChanged.bind(this)} required/>
                             Display name
-                            <input className="KeeText" type="text" ref="displayName" placeholder="DISPLAY NAME" onChange={this.displayNameChanged.bind(this)} />
+                            <input className="KeeText" type="text" ref="displayName" placeholder="DISPLAY NAME" onChange={this.displayNameChanged.bind(this)} required/>
                         </div>
                             <hr />
                             <br />
@@ -117,13 +132,13 @@ class RegisterPage extends Component {
                             <br />
                         <div className="Rform" >
                             First name
-                            <input className="KeeText" type="text" ref="firstName" placeholder="FIRST NAME" onChange={this.firstNameChanged.bind(this)} />
+                            <input className="KeeText" type="text" ref="firstName" placeholder="FIRST NAME" onChange={this.firstNameChanged.bind(this)} required/>
                             Last name
-                            <input className="KeeText" type="text" ref="lastName" placeholder="LAST NAME" onChange={this.lastNameChanged.bind(this)} />
+                            <input className="KeeText" type="text" ref="lastName" placeholder="LAST NAME" onChange={this.lastNameChanged.bind(this)} required/>
                             Email
-                            <input className="KeeMail" type="email" ref="email" placeholder="EMAIL" onChange={this.emailChanged.bind(this)} />
+                            <input className="KeeMail" type="email" ref="email" placeholder="EMAIL" onChange={this.emailChanged.bind(this)} required/>
                             Native language
-                            <select className="KeeSelect" ref="nativeLanguage" value={this.state.nativeLanguage} onchange={this.nativeLanguageChanged.bind(this)}>
+                            <select className="KeeSelect" ref="nativeLanguage" value={this.state.nativeLanguage} onChange={this.nativeLanguageChanged.bind(this)} required>
                                 <option className="KeeOption" value="Thai">Thai</option>
                                 <option className="KeeOption" value="English">English</option>
                                 <option className="KeeOption" value="Korean">Korean</option>
