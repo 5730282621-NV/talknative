@@ -122,6 +122,7 @@ router.post('/EnterChatRoom', function(req,res){
             console.log("Get item succeeded:", JSON.stringify(data, null, 2));
             if(data.Item==null){
                 console.log("enter new room");
+                //get chat_room info
                 var params = {
                     TableName : "chat_room",
                     Key: {
@@ -138,6 +139,28 @@ router.post('/EnterChatRoom', function(req,res){
                         console.log("Get item succeeded.");
                         item = data['Item']
                         if(item != null){
+                            //increase n_active_user
+                            var params = {
+                                TableName : "chat_room",
+                                Key: {
+                                    "chat_room_id": chat_room_id
+                                },
+                                UpdateExpression: "set n_active_user = :l",
+                                ExpressionAttributeValues:{
+                                    ":l":(item.n_active_user+1)
+                                }
+                            };
+                        
+                            docClient.update(params, function(err, data) {
+                                if (err) {
+                                    console.log("Unable to update item. Error:", JSON.stringify(err, null, 2));
+                                    return res.json({
+                                        result: false
+                                    })
+                                } 
+                            });
+
+                            //add new chat_session
                             last_msg_id =  item.last_msg_id;
                             var params = {
                                 TableName : "chat_session",
