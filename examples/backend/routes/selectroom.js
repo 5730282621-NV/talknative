@@ -6,8 +6,28 @@ router.get('/createRoom', function(req,res){
     var params = {
         TableName : "chat_room",
         Item : {
-            chat_room_id:'TH02',
-            chat_room_name:'Intermediate Thai Conversation',
+            chat_room_id:'TH04',
+            chat_room_name:'Advanced Thai Conversation',
+            language:'Thai',
+            n_active_user: 2
+        }
+    };
+    docClient.put(params, function(err, data) {
+        if (err) {
+            console.error("Unable to put item. Error JSON:", JSON.stringify(err, null, 2));
+            return res.json({
+                result: false
+            })
+        } else {
+            console.log("Added item succeeded:", JSON.stringify(data, null, 2));
+            return res.json(params.Item)
+        }
+    });
+    var params = {
+        TableName : "chat_room",
+        Item : {
+            chat_room_id:'TH03',
+            chat_room_name:'Upper Intermediate Thai Conversation',
             language:'Thai',
             n_active_user: 3
         }
