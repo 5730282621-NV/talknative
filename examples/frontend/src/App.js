@@ -9,6 +9,7 @@ import {
   withRouter
 } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage.js';
+import RegisterPage from './RegisterPage/RegisterPage.js'
 import SelectRoomPage from './SelectRoom/SelectRoomPage.js';
 import ChatRoomPage from './ChatRoom/ChatRoom.js';
 
@@ -60,8 +61,9 @@ class App extends React.Component {
         <Router>
           <div>
             <Route exact path="/" component={MyLoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/selectRoom" component={MySelectRoomPage} />
-            <Route path="/Chat/:chat_room_id" component={MyChatRoomPage}/>
+            <Route path="/Chat" component={MyChatRoomPage}/>
 
           </div>
         </Router>

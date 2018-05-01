@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './ChatRoom.css';
 import Header from '../Header/Header.js'
 import PersonalInfo from '../Header/PersonalInfo.js'
+import {withRouter} from 'react-router-dom'
 
 class ChatRoomPage extends React.Component {
   constructor(props){
@@ -12,12 +13,13 @@ class ChatRoomPage extends React.Component {
       // username:"Jijy",
       displayname:"",
       native_lang:"",
-      // chat_room_id: this.props.chat_room_id
-      chat_room_id:"",
+      chat_room_id: this.props.location.state.chat_room_id,
+      //chat_room_id:"",
       last_seen_msg_id:"",
       list: [],
       inputValue:""
     }
+    console.log(this.props.location.state.chat_room_id);
     this.setPersonalInfo = this.setPersonalInfo.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
@@ -51,7 +53,7 @@ class ChatRoomPage extends React.Component {
   
   componentDidMount(){
     this.setPersonalInfo(); 
-    this.interval = setInterval(() =>{this.getNewMsg();},500);
+    this.interval = setInterval(() =>{this.getNewMsg();},1500);
   }
    
   componentWillUnmount(){
@@ -146,7 +148,7 @@ class ChatRoomPage extends React.Component {
         })
         .then(res => res.json())
         .then(result => {
-          window.location="/selectRoom";
+          this.props.history.push("/selectRoom");
           
         });
   }
@@ -187,7 +189,7 @@ class ChatRoomPage extends React.Component {
         .then(result => {
         console.log("before if not success",result)
         console.log("before if not success",this.state.last_seen_msg_id)
-        if(!result.result){return;}
+        if(result.result){
         this.renderNewMsg(result.msg_list);
           let body2 = { 
             username: this.state.username,
@@ -209,6 +211,7 @@ class ChatRoomPage extends React.Component {
             console.log(result);
 
         })
+      }  
       });  
     });
   }
@@ -318,4 +321,4 @@ class ChatRoomPage extends React.Component {
   }
 }
   
-  export default ChatRoomPage;
+  export default withRouter(ChatRoomPage);
