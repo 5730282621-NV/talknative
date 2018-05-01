@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './LoginPage.css';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 class LoginPage extends Component {
 
@@ -8,7 +8,8 @@ class LoginPage extends Component {
         super();
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            testImg: ""
         }
     }
 
@@ -51,6 +52,23 @@ class LoginPage extends Component {
                 }
             });
         event.preventDefault();
+    }
+
+    test = (event) => {
+        fetch('/login/test', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "fileName" : "Daniel-Conway-Scorched-Earth.jpg"
+            })
+        }).then(response => {
+            return response.text();
+        }).then(url => {
+            console.log(url);
+            this.setState({
+                testImg: url
+            });
+        })
     }
 
     render() {
