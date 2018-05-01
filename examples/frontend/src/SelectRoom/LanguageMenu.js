@@ -45,7 +45,7 @@ class LanguageMenu extends Component {
             imgSrc = require('./asset/chat_icon/'+room.chat_room_id.substring(3,4) +'.png')
           }
           catch(err) {
-            imgSrc = require('./asset/chat_icon/'+'01'+'.png')
+            imgSrc = require('./asset/chat_icon/'+'01'+'.jpg')
           }
           return (
           <div className="room-menu" >
