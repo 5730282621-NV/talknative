@@ -74,7 +74,7 @@ router.get('/createRoom', function(req,res){
     // })
 });
 
-router.get('/getAllRoom', function(req, res,) {
+router.get('/getAllRoom', function(req, res) {
     var params = { TableName : "chat_room"};
     docClient.scan(params,function(err,data){
         if (err) {
