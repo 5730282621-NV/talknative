@@ -40,7 +40,7 @@ class LoginPage extends Component {
             .then(response => {
                 return response.json();
             }).then(body => {
-                console.log(body);
+                console.log("return from fetch /login/submit/",body);
                 if (body.isOk && body.username == u) {
                     console.log(u);
                     this.props.action(u);
