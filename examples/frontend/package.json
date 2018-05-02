@@ -30,5 +30,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "http://ec2-54-169-142-82.ap-southeast-1.compute.amazonaws.com:3000"
 }
