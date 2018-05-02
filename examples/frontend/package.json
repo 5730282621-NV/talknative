@@ -31,5 +31,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
+<<<<<<< HEAD
   "proxy": "http://54.254.143.189:3000"
+=======
+  "proxy": "http://ec2-54-169-142-82.ap-southeast-1.compute.amazonaws.com:3000"
+>>>>>>> 4fac69ac2b369680649e00c7d1112bf9be208b26
 }
