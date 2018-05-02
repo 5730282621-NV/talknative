@@ -53,13 +53,21 @@
     padding: 0px 20px;
 }
 
-.profile-pic{
+.profile-pic-default{
     border-radius: 50%;
     margin: auto;
     width: 200px;
     height: 200px;
     background-image: url("./asset/profile_pic/Daa_5e1VMAEYBtb.jpg");
     background-size: cover;
+}
+
+.profile-pic{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    
+    background-color: #76D3C9;
 }
 
 .profile-info{
