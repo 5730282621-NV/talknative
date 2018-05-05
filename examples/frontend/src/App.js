@@ -27,6 +27,9 @@ class App extends React.Component {
     };
   }
 
+  componentWillMount() {
+    document.title = 'TALKNATIVE'
+  }
   // This method will be sent to the child component
   handler(username) {
     this.setState({
